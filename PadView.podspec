@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'PadView'
-  s.version = '1.0'
+  s.version = '1.1'
   s.summary = 'PadView is a bottom pad view controller'
   s.description = <<-DESC
   PadView written on Swift 5.0 by levantAJ
