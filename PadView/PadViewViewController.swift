@@ -10,7 +10,7 @@ import UIKit
 
 public class PadViewViewController: UIViewController {
     public weak var contentView: UIView?
-    public var contentBackgroundColor: UIColor?
+    public var backgroundColor: UIColor?
     public var contentLeading: CGFloat = 10
     public var contentTrailing: CGFloat = -10
     public var contentBottom: CGFloat = -10
@@ -18,6 +18,7 @@ public class PadViewViewController: UIViewController {
     public var transitionAnimation: TimeInterval = 0.25
     public var onWillDismiss: (() -> Void)?
     public var onDidDismiss: (() -> Void)?
+    public var statusBarStyle: UIStatusBarStyle = .default
     
     public init(contentView: UIView) {
         self.contentView = contentView
@@ -31,9 +32,8 @@ public class PadViewViewController: UIViewController {
     
     public lazy var contentWrapperView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 20
+        view.layer.cornerRadius = 30
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOpacity = 0.15
         view.layer.shadowRadius = 20
@@ -43,6 +43,10 @@ public class PadViewViewController: UIViewController {
     
     var contentWrapperViewBottom: NSLayoutConstraint?
     
+    public override var preferredStatusBarStyle: UIStatusBarStyle {
+        return statusBarStyle
+    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -51,7 +55,7 @@ public class PadViewViewController: UIViewController {
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         UIView.animate(withDuration: transitionAnimation, delay: 0.0, options: .curveEaseIn, animations: {
-            self.view.backgroundColor = self.contentBackgroundColor?.withAlphaComponent(0.9)
+            self.view.backgroundColor = self.backgroundColor?.withAlphaComponent(0.9)
             self.contentWrapperViewBottom?.constant = self.contentBottom - UIApplication.shared.safeAreaInsets.bottom
             self.view.layoutIfNeeded()
         }, completion: nil)
